@@ -161,11 +161,61 @@ Suggested order:
 2. Run `comparative_analysis.ipynb` to compare all models side by side
 3. Use the saved checkpoints in each model folder for inference
 
+### Real-Time Webcam App
+
+The repository includes a fully-featured real-time webcam application with a rich HUD overlay. It loads trained PyTorch checkpoints and performs live face detection plus emotion classification at speed.
+
+#### Quick Start
+
+```bash
+# Activate your virtual environment first
+source .venv/bin/activate
+
+# Run with any supported architecture
+python realtime_emotion_app.py --architecture resnet
+python realtime_emotion_app.py --architecture vgg
+python realtime_emotion_app.py --architecture densenet
+python realtime_emotion_app.py --architecture vit
+```
+
+#### All Options
+
+| Flag | Default | Description |
+|---|---|---|
+| `--architecture` | `resnet` | Model to load: `resnet`, `vgg`, `densenet`, `vit` |
+| `--checkpoint` | auto | Override the `.pt` checkpoint path |
+| `--class-indices` | auto | Override the `class_indices.json` path |
+| `--camera-index` | `0` | Webcam device index |
+| `--confidence-threshold` | `0.0` | Min confidence to show label (0–1) |
+| `--width` | `1280` | Capture frame width |
+| `--height` | `720` | Capture frame height |
+
+#### Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `Q` / `Esc` | Quit |
+| `M` | Cycle to next model architecture (lazy-loads on demand) |
+| `S` | Save screenshot to `screenshots/` folder |
+| `H` | Toggle HUD overlay |
+| `D` | Toggle debug mode (mini probability bars under each face) |
+
+#### Features
+
+- **Rich HUD**: Top status bar shows active model, live FPS, face count, and compute device
+- **Emotion probability panel**: Live bar chart of all 8 emotion scores for the primary face
+- **Per-emotion colours**: Each emotion has a unique colour used for bounding boxes and bars
+- **EMA smoothing**: Exponential moving-average on raw probabilities reduces flickering
+- **Lazy model switching**: Switch architectures at runtime with `M`; models load once and are cached
+- **Screenshot capture**: One-keystroke save of annotated frames
+- **Rounded UI**: Polished rounded-rectangle overlays with transparency
+
 ## Notes
 
 - The dataset is balanced by design, so weighted and macro metrics are both meaningful.
 - The project uses 48x48 images, so the architectures are adapted for smaller spatial resolution rather than standard ImageNet-sized inputs.
 - If you retrain the notebooks after the ViT fixes, the comparative notebook will update automatically from the saved history and outputs.
+- For the webcam app, install the runtime dependencies from `requirements.txt` first if they are not already available in your environment.
 
 ## Files Of Interest
 
