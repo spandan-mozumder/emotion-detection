@@ -1,0 +1,15 @@
+.venv/
+.vscode/
+dataset/
+
+# Model artifacts
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
